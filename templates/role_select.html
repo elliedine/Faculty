@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Select Role - Faculty Locator{% endblock %}
+
+{% block content %}
+<div class="role-select-container">
+    <div class="role-buttons">
+        <a href="{{ url_for('student_dashboard') }}" class="role-card">
+            <span class="role-label">STUDENT</span>
+        </a>
+        {% if session.get('role') == 'instructor' %}
+        <a href="{{ url_for('instructor_dashboard') }}" class="role-card">
+            <span class="role-label">INSTRUCTOR</span>
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
