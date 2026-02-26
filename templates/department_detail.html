@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}{{ department.name }} - Faculty Locator{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="page-header">
+        <h1>{{ department.name }} ({{ department.code }})</h1>
+        <a href="{{ url_for('student_dashboard') }}" class="btn btn-back">&larr; Back to Departments</a>
+    </div>
+    <div class="instructors-table-wrapper">
+        <table class="instructors-table">
+            <thead>
+                <tr>
+                    <th>Instructor</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inst in instructors %}
+                <tr>
+                    <td>{{ inst.full_name }}</td>
+                    <td>
+                        <span class="status-badge status-{{ inst.status | lower | replace(' ', '-') }}">
+                            {{ inst.status }}
+                        </span>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2" class="empty-message">No instructors found in this department.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
