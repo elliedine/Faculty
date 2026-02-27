@@ -1,0 +1,117 @@
+<div class="dashboard-container">
+    <div class="page-header">
+        <h1>Instructor Dashboard</h1>
+        <a href="/select" class="btn btn-back">&larr; Back</a>
+    </div>
+
+    <!-- Status Section -->
+    <section class="dashboard-section">
+        <h2>My Status</h2>
+        <div class="status-overview">
+            <div class="current-status">
+                <span class="status-label">Current Status:</span>
+                <span class="status-badge status-<%= instructor.status.toLowerCase().replace(/ /g, '-') %>">
+                    <%= instructor.status %>
+                </span>
+            </div>
+            <div class="status-info">
+                <span><strong>Name:</strong> <%= instructor.full_name %></span>
+                <span><strong>Department:</strong> <%= instructor.dept_name %></span>
+            </div>
+        </div>
+        <form method="POST" action="/instructor/status" class="status-form">
+            <div class="status-buttons">
+                <button type="submit" name="status" value="In" class="btn btn-status btn-in <%= instructor.status === 'In' ? 'active' : '' %>">In</button>
+                <button type="submit" name="status" value="Out" class="btn btn-status btn-out <%= instructor.status === 'Out' ? 'active' : '' %>">Out</button>
+                <button type="submit" name="status" value="On Leave" class="btn btn-status btn-on-leave <%= instructor.status === 'On Leave' ? 'active' : '' %>">On Leave</button>
+                <button type="submit" name="status" value="On Travel" class="btn btn-status btn-on-travel <%= instructor.status === 'On Travel' ? 'active' : '' %>">On Travel</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Schedule Section -->
+    <section class="dashboard-section">
+        <h2>Schedule Leave / Travel</h2>
+        <form method="POST" action="/instructor/schedule" class="schedule-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="schedule_type">Type</label>
+                    <select id="schedule_type" name="schedule_type" required>
+                        <option value="leave">Leave</option>
+                        <option value="travel">Travel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" id="start_date" name="start_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input type="date" id="end_date" name="end_date" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="reason">Reason</label>
+                <textarea id="reason" name="reason" rows="2" placeholder="Enter reason (optional)"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Schedule</button>
+        </form>
+
+        <% if (schedules && schedules.length > 0) { %>
+        <div class="schedule-list">
+            <h3>Scheduled Items</h3>
+            <table class="instructors-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Reason</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% schedules.forEach(s => { %>
+                    <tr>
+                        <td><span class="schedule-type schedule-<%= s.schedule_type %>"><%= s.schedule_type.charAt(0).toUpperCase() + s.schedule_type.slice(1) %></span></td>
+                        <td><%= s.start_date %></td>
+                        <td><%= s.end_date %></td>
+                        <td><%= s.reason || '—' %></td>
+                        <td><%= s.created_at %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+    </section>
+
+    <!-- Activity Log Section -->
+    <section class="dashboard-section">
+        <h2>Activity Log</h2>
+        <table class="instructors-table">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Details</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (logs.length === 0) { %>
+                <tr>
+                    <td colspan="3" class="empty-message">No activity recorded yet.</td>
+                </tr>
+                <% } else { %>
+                <% logs.forEach(log => { %>
+                <tr>
+                    <td><strong><%= log.action %></strong></td>
+                    <td><%= log.details || '—' %></td>
+                    <td><%= log.timestamp %></td>
+                </tr>
+                <% }) %>
+                <% } %>
+            </tbody>
+        </table>
+    </section>
+</div>
