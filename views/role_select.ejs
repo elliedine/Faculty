@@ -1,0 +1,12 @@
+<div class="role-select-container">
+    <div class="role-buttons">
+        <a href="/student" class="role-card">
+            <span class="role-label">STUDENT</span>
+        </a>
+        <% if (session && session.role === 'instructor') { %>
+        <a href="/instructor" class="role-card">
+            <span class="role-label">INSTRUCTOR</span>
+        </a>
+        <% } %>
+    </div>
+</div>

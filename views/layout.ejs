@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Faculty Locator' %></title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <% if (session && session.user_id) { %>
+    <header class="header">
+        <div class="header-left">
+            <img src="/static/img/isu-logo.svg" alt="ISU Logo" class="logo">
+            <span class="welcome-text">Welcome, <%= session.full_name || 'User' %>!</span>
+        </div>
+        <div class="header-right">
+            <a href="/logout" class="btn btn-logout">Log out</a>
+        </div>
+    </header>
+    <% } %>
+
+    <main class="main-content">
+        <% if (messages) { %>
+        <% if (messages.error && messages.error.length) { %>
+        <div class="flash-messages">
+            <% messages.error.forEach(msg => { %>
+            <div class="flash flash-error"><%= msg %></div>
+            <% }) %>
+        </div>
+        <% } %>
+        <% if (messages.success && messages.success.length) { %>
+        <div class="flash-messages">
+            <% messages.success.forEach(msg => { %>
+            <div class="flash flash-success"><%= msg %></div>
+            <% }) %>
+        </div>
+        <% } %>
+        <% } %>
+
+        <%- body %>
+    </main>
+</body>
+</html>

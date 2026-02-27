@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Locator - Login</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="login-page">
+        <div class="login-header">
+            <img src="/static/img/isu-logo.svg" alt="ISU Logo" class="logo-large">
+            <h1>Faculty Locator</h1>
+            <p>Isabela State University</p>
+        </div>
+        <div class="login-card">
+            <h2>Sign In</h2>
+            <% if (messages) { %>
+            <% if (messages.error && messages.error.length) { %>
+            <div class="flash-messages">
+                <% messages.error.forEach(msg => { %>
+                <div class="flash flash-error"><%= msg %></div>
+                <% }) %>
+            </div>
+            <% } %>
+            <% } %>
+            <form method="POST" action="/login">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+            </form>
+            <div class="login-help">
+                <p><strong>Demo Accounts:</strong></p>
+                <p>Student: <code>student</code> / <code>password</code></p>
+                <p>Instructor: <code>jdoe</code> / <code>password</code></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
